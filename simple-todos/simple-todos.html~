@@ -1,0 +1,17 @@
+<head>
+  <title>Wellcome to Carcassone!</title>
+</head>
+<body>
+
+
+  <div class="jumbotron">
+    <div>
+      {{> loginButtons }}
+    </div>
+    <div class="container">
+      {{> welcome  }}
+    </div>
+  </div>
+
+  
+</body>
