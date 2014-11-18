@@ -1,17 +1,83 @@
 <head>
-  <title>Wellcome to Carcassone!</title>
+  <title>WELLCOME TO CARCASSONNE!</title>
 </head>
+
 <body>
+  <div class="container">
+    <header>
+      <h1>Todo List ({{incompleteCount}})</h1>
+
+      <label class="hide-completed">
+        <input type="checkbox" checked="{{hideCompleted}}" />
+        Hide Completed Tasks
+      </label>
+
+      <!-- {{> loginButtons}} -->
+
+	 <ul>
+        {{> signupForm}}
+    </ul>
 
 
-  <div class="jumbotron">
-    <div>
-      {{> loginButtons }}
-    </div>
-    <div class="container">
-      {{> welcome  }}
-    </div>
+      {{#if currentUser}}
+        <form class="new-task">
+          <input type="text" name="text" placeholder="Type to add new tasks" />
+        </form>
+      {{/if}}
+    </header>
+
+    <ul>
+      {{#each tasks}}
+        {{> task}}
+      {{/each}}
+    </ul>
   </div>
-
-  
 </body>
+
+<template name="task">
+  <li class="{{#if checked}}checked{{/if}}">
+    <button class="delete">&times;</button>
+
+    <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+
+    <span class="text"><strong>{{username}}</strong> - {{text}}</span>
+  </li>
+</template>
+
+
+<template name="signupForm">
+  <form id="signup-form">
+    <h2>Sign Up</h2>
+
+    <label for="signup-username">Username</label>
+    <input type="text" id="signup-username" placeholder="Username" />
+
+    <label for="signup-password">Password</label>
+    <input type="password" id="signup-password" placeholder="Password" />
+
+    <label for="signup-name">Full Name</label>
+    <input type="text" id="signup-name" placeholder="Full Name" />
+
+    <button type="submit">Sign Up</button>
+  </form>
+</template>
+
+<template name="loginForm">
+  <form id="login-form">
+    <h2>Log In</h2>
+
+    <label for="login-username">Username</label>
+    <input type="text" id="login-username" placeholder="Username" />
+
+    <label for="login-password">Password</label>
+    <input type="password" id="login-password" placeholder="Password" />
+
+    <button type="submit">Log In</button>
+  </form>
+</template>
+
+<template name="logoutForm">
+  <form id="logout-form">
+    <button type="submit">Log Out</button>
+  </form>
+</template>
