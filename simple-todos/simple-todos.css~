@@ -97,6 +97,13 @@ li.checked .text {
   text-decoration: line-through;
 }
 
+form {
+	margin: 0 auto;
+	width:250px;
+	background: #eee;
+   border-color: #ddd;
+}
+
 li.private {
   background: #eee;
   border-color: #ddd;
@@ -123,4 +130,5 @@ header .hide-completed {
   .new-task input {
     padding-bottom: 5px;
   }
+  
 }

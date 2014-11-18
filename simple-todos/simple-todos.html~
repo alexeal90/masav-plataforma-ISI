@@ -14,10 +14,17 @@
 
       <!-- {{> loginButtons}} -->
 
-	 <ul>
+	 <ulsg>
         {{> signupForm}}
-    </ul>
+    </ulsg>
 
+	 <ul>
+        {{> loginForm}}
+    </ul>
+    
+    <ul>
+        {{> logoutForm}}
+    </ul>
 
       {{#if currentUser}}
         <form class="new-task">
@@ -49,14 +56,17 @@
   <form id="signup-form">
     <h2>Sign Up</h2>
 
-    <label for="signup-username">Username</label>
-    <input type="text" id="signup-username" placeholder="Username" />
+    <label for="signup-name">Correo electrónico</label>
+    <input type="text" id="signup-name" placeholder="Correo electrónico" />
 
-    <label for="signup-password">Password</label>
-    <input type="password" id="signup-password" placeholder="Password" />
+    <label for="signup-username">Nombre de usuario</label>
+    <input type="text" id="signup-username" placeholder="Usuario" />
 
-    <label for="signup-name">Full Name</label>
-    <input type="text" id="signup-name" placeholder="Full Name" />
+    <label for="signup-password">Contraseña</label>
+    <input type="password" id="signup-password" placeholder="Contraseña" />
+
+    <label for="signup-password">Repite contraseña</label>
+    <input type="password" id="signup-password" placeholder="Contraseña" />
 
     <button type="submit">Sign Up</button>
   </form>
@@ -64,15 +74,15 @@
 
 <template name="loginForm">
   <form id="login-form">
-    <h2>Log In</h2>
+    <h2>Sign in</h2>
 
-    <label for="login-username">Username</label>
-    <input type="text" id="login-username" placeholder="Username" />
+    <label for="login-username">Usuario</label>
+    <input type="text" id="login-username" placeholder="Usuario" />
 
-    <label for="login-password">Password</label>
-    <input type="password" id="login-password" placeholder="Password" />
+    <label for="login-password">Contraseña</label>
+    <input type="password" id="login-password" placeholder="Contraseña" />
 
-    <button type="submit">Log In</button>
+    <button type="submit">GO!</button>
   </form>
 </template>
 
