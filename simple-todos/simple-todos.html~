@@ -14,9 +14,9 @@
 
       <!-- {{> loginButtons}} -->
 
-	 <ulsg>
+	 <ul>
         {{> signupForm}}
-    </ulsg>
+    </ul>
 
 	 <ul>
         {{> loginForm}}
