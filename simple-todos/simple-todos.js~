@@ -53,14 +53,9 @@ if (Meteor.isClient) {
     }
   });
 
-	Accounts.validateNewUser(function (user) {
-	  if (user.username && user.username.length >= 3)
-		 return true;
-	  throw new Meteor.Error(403, "Username must have at least 3 characters");
-	});
-  //Accounts.ui.config({
-    //passwordSignupFields: "USERNAME_ONLY"
-  //});
+  Accounts.ui.config({
+    passwordSignupFields: "USERNAME_ONLY"
+  });
   
   Template.signupForm.events({
 	  "submit #signup-form": function(event, template) {

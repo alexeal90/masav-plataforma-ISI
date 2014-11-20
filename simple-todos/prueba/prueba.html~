@@ -1,0 +1,31 @@
+<head>
+  <link rel="stylesheet" href="base.css" type="text/css" />
+</head>
+
+<body>
+	<div id='partida' style= "position:relative;">
+		<canvas id='tablero' width='980' height='750' 
+		style="position:absolute; left: 0; top: 0;" ></canvas> 
+	</div>
+	
+	<div id='menu' style= "position:relative;">
+		<li><button class= "fondo"> home </button></li>
+		<li><button class= "fondo"> home </button></li>
+		<li><button class= "fondo"> home </button></li>
+		<li><button class= "fondo"> home </button></li>
+		<li><button class= "fondo"> home </button></li>
+		<li><button class= "fondo"> home </button></li>
+	</div>
+	
+	<div id='messages' style= "position:relative;">
+		<canvas id='chat' width='200' height='500'
+		style="position:absolute; left: 0; top: 250;"></canvas>
+	</div>
+	
+	
+</body>
+
+<template name="hello">
+  <button>Click Me</button>
+  <p>You've pressed the button {{counter}} times.</p>
+</template>

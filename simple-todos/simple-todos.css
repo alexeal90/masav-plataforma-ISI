@@ -130,4 +130,15 @@ header .hide-completed {
     padding-bottom: 5px;
   }
   
+  #container {
+	  padding-top:500px;
+	  margin:0 auto;
+	  width:480px;
+	}
+
+	canvas {
+	  background-color:black;
+
+	}
+  
 }

@@ -1,9 +1,17 @@
+<html lang="en">
 <head>
   <title>WELLCOME TO CARCASSONNE!</title>
 </head>
 
 <body>
-  <div class="container">
+		<!--
+	<div class="ventana">
+		<canvas id='tablero' width='320' height='480'></canvas>
+	</div>
+
+	<script src='simple-todos.js'></script>
+ 		-->
+  	<div class="container">
     <header>
       <h1>Todo List ({{incompleteCount}})</h1>
 
@@ -12,7 +20,7 @@
         Hide Completed Tasks
       </label>
 
-      <!-- {{> loginButtons}} -->
+       {{> loginButtons}} 
 
 	 <ul>
         {{> signupForm}}
@@ -91,3 +99,5 @@
     <button type="submit">Log Out</button>
   </form>
 </template>
+
+</html>
