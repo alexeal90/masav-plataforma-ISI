@@ -1,0 +1,93 @@
+<head>
+  <title>WELLCOME TO CARCASSONNE!</title>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Todo List ({{incompleteCount}})</h1>
+
+      <label class="hide-completed">
+        <input type="checkbox" checked="{{hideCompleted}}" />
+        Hide Completed Tasks
+      </label>
+
+      <!-- {{> loginButtons}} -->
+
+	 <ulsg>
+        {{> signupForm}}
+    </ulsg>
+
+	 <ul>
+        {{> loginForm}}
+    </ul>
+    
+    <ul>
+        {{> logoutForm}}
+    </ul>
+
+      {{#if currentUser}}
+        <form class="new-task">
+          <input type="text" name="text" placeholder="Type to add new tasks" />
+        </form>
+      {{/if}}
+    </header>
+
+    <ul>
+      {{#each tasks}}
+        {{> task}}
+      {{/each}}
+    </ul>
+  </div>
+</body>
+
+<template name="task">
+  <li class="{{#if checked}}checked{{/if}}">
+    <button class="delete">&times;</button>
+
+    <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+
+    <span class="text"><strong>{{username}}</strong> - {{text}}</span>
+  </li>
+</template>
+
+
+<template name="signupForm">
+  <form id="signup-form">
+    <h2>Sign Up</h2>
+
+    <label for="signup-name">Correo electrónico</label>
+    <input type="text" id="signup-name" placeholder="Correo electrónico" />
+
+    <label for="signup-username">Nombre de usuario</label>
+    <input type="text" id="signup-username" placeholder="Usuario" />
+
+    <label for="signup-password">Contraseña</label>
+    <input type="password" id="signup-password" placeholder="Contraseña" />
+
+    <label for="signup-password">Repite contraseña</label>
+    <input type="password" id="signup-password" placeholder="Contraseña" />
+
+    <button type="submit">Sign Up</button>
+  </form>
+</template>
+
+<template name="loginForm">
+  <form id="login-form">
+    <h2>Sign in</h2>
+
+    <label for="login-username">Usuario</label>
+    <input type="text" id="login-username" placeholder="Usuario" />
+
+    <label for="login-password">Contraseña</label>
+    <input type="password" id="login-password" placeholder="Contraseña" />
+
+    <button type="submit">GO!</button>
+  </form>
+</template>
+
+<template name="logoutForm">
+  <form id="logout-form">
+    <button type="submit">Log Out</button>
+  </form>
+</template>
