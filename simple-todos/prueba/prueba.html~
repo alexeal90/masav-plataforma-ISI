@@ -1,5 +1,6 @@
 <head>
   <link rel="stylesheet" href="base.css" type="text/css" />
+  
 </head>
 
 <body>
@@ -9,12 +10,13 @@
 	</div>
 	
 	<div id='menu' style= "position:relative;">
-		<li><button class= "fondo"> home </button></li>
-		<li><button class= "fondo"> home </button></li>
-		<li><button class= "fondo"> home </button></li>
-		<li><button class= "fondo"> home </button></li>
-		<li><button class= "fondo"> home </button></li>
-		<li><button class= "fondo"> home </button></li>
+                <a href="#" class="button">HOME&nbsp;♛</a>
+		<ul><button class= "fondo"> home </button></ul>
+		<ul><button class= "fondo"> home </button></ul>
+		<ul><button class= "fondo"> home </button></ul>
+		<ul><button class= "fondo"> home </button></ul>
+		<ul><button class= "fondo"> home </button></ul>
+		<ul><button class= "fondo"> home </button></ul>
 	</div>
 	
 	<div id='messages' style= "position:relative;">
