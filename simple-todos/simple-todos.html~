@@ -1,46 +1,50 @@
+<html lang="en">
 <head>
   <title>WELLCOME TO CARCASSONNE!</title>
+  <link rel="stylesheet" href="simple-todos.css" type="text/css" />
+  <script src='jquery-1.10.2.js' type='text/javascript'></script>
+  <!--<script src='simple-todos.js' type='text/javascript'></script>-->
 </head>
 
 <body>
-  <div class="container">
+
+  	<div class="container">
     <header>
-      <h1>Todo List ({{incompleteCount}})</h1>
+     
 
       <label class="hide-completed">
-        <input type="checkbox" checked="{{hideCompleted}}" />
-        Hide Completed Tasks
+        
       </label>
 
-      <!-- {{> loginButtons}} -->
+     
 
 	 <ul>
+<<<<<<< HEAD
         {{> signupForm}}
+=======
+       
+>>>>>>> 05ce1abc23d9f7554906dff84075c947925ad01a
     </ul>
 
 	 <ul>
-        {{> loginForm}}
+        
     </ul>
     
     <ul>
-        {{> logoutForm}}
+        
     </ul>
 
-      {{#if currentUser}}
         <form class="new-task">
           <input type="text" name="text" placeholder="Type to add new tasks" />
         </form>
-      {{/if}}
     </header>
 
     <ul>
-      {{#each tasks}}
-        {{> task}}
-      {{/each}}
+
     </ul>
   </div>
 </body>
-
+<!--
 <template name="task">
   <li class="{{#if checked}}checked{{/if}}">
     <button class="delete">&times;</button>
@@ -91,3 +95,5 @@
     <button type="submit">Log Out</button>
   </form>
 </template>
+
+</html>
