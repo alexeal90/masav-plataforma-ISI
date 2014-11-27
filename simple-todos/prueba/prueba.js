@@ -2,14 +2,41 @@ if (Meteor.isClient) {
 
 
   /****
-     
+        
     Subscripcion de las lsitas o bases de datos creadas en el servidor
   */
    
    Meteor.subscribe("UsersNick"); //Usersnicks referido a la lista de los usarios registrados en la aplicacion
+   Meteor.subscribe("")   
    
+  Tracker.autorun(function(){
+        var game = Session.get("game");
+  
+  Meteor.subscribe("messages_game", game); // Mensajes del chat del juego
+  
+  Meteor.subscribe("matches_game", game);  // Marcador de las partidas
+      });
+  
+  
+  /*** Aqui empieza la ejecución del juego: desde el momento en que se cree la partida
+  
+  */
  
- // counter starts at 0
+ 
+ 
+ 
+ // counter starts at    0
+ //
+  Meteor.startup(function(){
+      Session.set("game", "none");  
+      
+      $('#container').hide();
+      $(document).on("click", ".alert .close", function(e) {
+          //Crear partida
+      });
+  });
+  
+  
   Session.setDefault("counter", 0);
 
   Template.hello.helpers({
@@ -18,6 +45,11 @@ if (Meteor.isClient) {
     }
   });
 
+ 
+ 
+ 
+ 
+ 
   Template.hello.events({   
     'click button': function () {
       // Cuando hacen click aquí tenemos que crear una partida
@@ -53,7 +85,7 @@ Template.input.events = {
                         usr_id: usr_id,
                         message: message.val(), 
                         date: Date.now(),
-                        game_id
+                        game_id:session.get("game")
                         
                     });
             }else{
