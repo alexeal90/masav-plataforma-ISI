@@ -36,9 +36,32 @@
 		<canvas id='chat' width='200' height='500'
 		style="position:absolute; left: 0; top: 250;"></canvas>
 	</div>
-	
+
 	
 </body>
+<template name="options">
+        <div id='game_features'>
+                <button class="close_Div" style="float: right">x</button>
+                <p><label>Nombre de la partida</label><input type="text" size="30" id="nombre" /></p>
+                <p><label>Número de jugadores</label><input type="text" size="30" id="num_jugadores" /></p>
+                <input type="checkbox" name="tablero" id="tablero"><label>Tablero Inteligente</label>
+                        <hr>
+                        <label>Dificultad</label><br>
+                        <input type="radio" name="level" value="Easy" checked> Fácil
+                        <input type="radio" name="level" value="Medium"> Medio
+                        <input type="radio" name="level" value="Hard"> Difícil
+                <!--<hr>
+                        <label>Escenario</label><br>
+                        <input type="radio" name="escenario" value="Clásico" checked> Clásico
+                        <input type="radio" name="escenario" value="Invernal" class="escenario" > Invernal
+                        <input type="radio" name="escenario" value="Espacial" class="escenario"> Espacial
+                <hr>-->
+                <td colspan="2">
+                        <button class="submit">Submit</button>
+                        <button class="reset">Reset</button>
+                </td>
+        </div>
+</template>
 
 <template name="hello">
   <button>Click Me</button>
