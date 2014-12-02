@@ -49,6 +49,7 @@ if (Meteor.isClient) {
         }
     });
 
+<<<<<<< HEAD
 
     Template.join_match.events({
         // Cuando hacen click aquí tenemos que unirnos a una plantilla
@@ -72,6 +73,15 @@ if (Meteor.isClient) {
 
 
     Template.chat.events = {
+=======
+    Template.body.events({
+        // Cuando hacen click aquí tenemos que crear una partida
+                
+    });
+
+
+    Template.input.events = {
+>>>>>>> 8de6efaf550c6b580a04d749e73f2b919b058abb
         'keydown input#chat_messages' : function (event){
             if (event.which == 13){
                 if(Meteor.us//Aqui tenemos que comprobar si el usuario esta autenticado

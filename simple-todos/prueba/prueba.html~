@@ -39,7 +39,11 @@
 
 	
 </body>
+<<<<<<< HEAD
 <template name="create">
+=======
+<template name="options">
+>>>>>>> 8de6efaf550c6b580a04d749e73f2b919b058abb
         <div id='game_features'>
                 <button class="close_Div" style="float: right">x</button>
                 <p><label>Nombre de la partida</label><input type="text" size="30" id="nombre" /></p>
@@ -57,16 +61,23 @@
                         <input type="radio" name="escenario" value="Espacial" class="escenario"> Espacial
                 <hr>-->
                 <td colspan="2">
+<<<<<<< HEAD
                         <button class="submit" id="start_game">Submit</button>
+=======
+                        <button class="submit">Submit</button>
+>>>>>>> 8de6efaf550c6b580a04d749e73f2b919b058abb
                         <button class="reset">Reset</button>
                 </td>
         </div>
 </template>
+<<<<<<< HEAD
 
 
 <template name="chat">
   
 </template>
+=======
+>>>>>>> 8de6efaf550c6b580a04d749e73f2b919b058abb
 
 <template name="hello">
   <button>Click Me</button>

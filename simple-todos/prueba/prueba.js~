@@ -32,7 +32,10 @@ if (Meteor.isClient) {
             // Cuando hacen click aquí tenemos que crear una partida
             match_name= parse($('#nombre').val());
             var score= 0;
+<<<<<<< HEAD
             var status= 'waiting';
+=======
+>>>>>>> 8de6efaf550c6b580a04d749e73f2b919b058abb
             num_players= parseInt($('#num_jugadores').val());
             difficulty= $('input[name=level]:checked', '#game_features').val();         
             $("#start_game").click(function() {
@@ -41,14 +44,19 @@ if (Meteor.isClient) {
                         num_players: num_players,
                         difficulty: difficulty,
                         owner: Meteor.userId(),                   
+<<<<<<< HEAD
                         owner_name: Meteor.user().username,
                         score: score,
                         status: status                        
+=======
+                        owner_name: Meteor.user().username
+>>>>>>> 8de6efaf550c6b580a04d749e73f2b919b058abb
                     });
             })        
         }
     });
 
+<<<<<<< HEAD
 
     Template.body.events({
         // Cuando hacen click aquí tenemos que unirnos a una plantilla
@@ -72,6 +80,15 @@ if (Meteor.isClient) {
 
 
     Template.chat.events = {
+=======
+    Template.body.events({
+        // Cuando hacen click aquí tenemos que crear una partida
+                
+    });
+
+
+    Template.input.events = {
+>>>>>>> 8de6efaf550c6b580a04d749e73f2b919b058abb
         'keydown input#chat_messages' : function (event){
             if (event.which == 13){
                 if(Meteor.us//Aqui tenemos que comprobar si el usuario esta autenticado

@@ -19,7 +19,11 @@
      
 
 	 <ul>
+<<<<<<< HEAD
+        {{> signupForm}}
+=======
        
+>>>>>>> 05ce1abc23d9f7554906dff84075c947925ad01a
     </ul>
 
 	 <ul>
