@@ -1,6 +1,19 @@
 <head>
   <link rel="stylesheet" href="base.css" type="text/css" />
-  
+  <style>
+            body {
+                background: url("home/al-10-11/acarrion/Desktop/ISI/.git/masav-plataforma-ISI/simple-todos/Images") repeat;
+            }
+            #banner {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                right: 0px;
+                width: 100%;
+                height: 200px;
+                z-index: -1;
+            }
+        </style>
 </head>
 
 <body>
@@ -23,9 +36,37 @@
 		<canvas id='chat' width='200' height='500'
 		style="position:absolute; left: 0; top: 250;"></canvas>
 	</div>
-	
+
 	
 </body>
+<template name="create">
+        <div id='game_features'>
+                <button class="close_Div" style="float: right">x</button>
+                <p><label>Nombre de la partida</label><input type="text" size="30" id="nombre" /></p>
+                <p><label>Número de jugadores</label><input type="text" size="30" id="num_jugadores" /></p>
+                <input type="checkbox" name="tablero" id="tablero"><label>Tablero Inteligente</label>
+                        <hr>
+                        <label>Dificultad</label><br>
+                        <input type="radio" name="level" value="Easy" checked> Fácil
+                        <input type="radio" name="level" value="Medium"> Medio
+                        <input type="radio" name="level" value="Hard"> Difícil
+                <!--<hr>
+                        <label>Escenario</label><br>
+                        <input type="radio" name="escenario" value="Clásico" checked> Clásico
+                        <input type="radio" name="escenario" value="Invernal" class="escenario" > Invernal
+                        <input type="radio" name="escenario" value="Espacial" class="escenario"> Espacial
+                <hr>-->
+                <td colspan="2">
+                        <button class="submit" id="start_game">Submit</button>
+                        <button class="reset">Reset</button>
+                </td>
+        </div>
+</template>
+
+
+<template name="chat">
+  
+</template>
 
 <template name="hello">
   <button>Click Me</button>
