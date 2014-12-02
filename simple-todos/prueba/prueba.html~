@@ -33,9 +33,10 @@
 	</div>
 	
 	<div id='messages' style= "position:relative;">
-
-		{{> input}}
-		{{> chat_messages }}
+		<div class="span2">
+			{{> input}}
+			{{> chat_messages }}
+		</div>
 		<!-- <canvas id='chat' width='200' height='500'
 		style="position:absolute; left: 0; top: 250;"></canvas> -->
 	</div>
@@ -71,10 +72,11 @@
 
 
 <template name="input">
-	<div id="chat_canvas">
+	<p>Message: <input type="text" id="message"></p>
+	<!--<div id="chat_canvas">
  		<form id="chat_messages"> Message: </form>
  		<input type="text" id="message">
- 	</div>
+ 	</div>-->
 </template>
 
 <template name="chat_messages">

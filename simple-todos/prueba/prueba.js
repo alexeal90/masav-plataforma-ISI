@@ -1,13 +1,19 @@
 if (Meteor.isClient) {
     /****
     Subscripcion de las listas o bases de datos creadas en el servidor
-    */
-    Meteor.subscribe("usersNick"); //Usersnicks referido a la lista de los usarios registrados en la aplicacion
+    
+    // Meteor.subscribe("usersNick"); //Usersnicks referido a la lista de los usarios registrados en la aplicacion
     Tracker.autorun(function(){
         var game = Session.get("game");
         Meteor.subscribe("messages_game", game); // Mensajes del chat del juego
         Meteor.subscribe("matches_game", game); // Marcador de las partidas
     });
+    */
+    
+	Tracker.autorun(function(){
+		Meteor.subscribe("messages_current_game");
+	});
+	
     /*** Aqui empieza la ejecución del juego: desde el momento en que se cree la partida
     */
     // counter starts at 0

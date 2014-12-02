@@ -26,6 +26,9 @@ if (Meteor.isClient) {
     }
     });
 
+	Tracker.autorun(function(){
+		Meteor.subscribe("messages_current_game");
+	});
 
     Template.create.events({
         'click button': function () {
