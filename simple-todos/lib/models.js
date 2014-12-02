@@ -1,15 +1,3 @@
-/**
-*  Collections 
-*/
-
-Messages = new Meteor.Collection('messages');
-
-Games = new Meteor.Collection('games');
-
-Matches = new Meteor.Collection('matches');
-
-// For exporting certain attributes of the Meteor.users collection to
-// all clients. By default, Meteor.collection only publishes the
-// document of the connected
-ConnectedUsers = new Meteor.Collection('connectedusers');
+Messages_games =new Meteor.Collection('messages_game');
+Matches_games =new Meteor.Collection('matches_game');
 

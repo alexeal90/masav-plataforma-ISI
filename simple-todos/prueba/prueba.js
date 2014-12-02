@@ -49,7 +49,7 @@ if (Meteor.isClient) {
         }
     });
 
-<<<<<<< HEAD
+
 
     Template.join_match.events({
         // Cuando hacen click aquí tenemos que unirnos a una plantilla
@@ -58,7 +58,8 @@ if (Meteor.isClient) {
                         matches_game.insert({
                                       
                         });   
-        }                
+        })               
+    }
     });
 
     Template.body.events({
@@ -68,44 +69,56 @@ if (Meteor.isClient) {
                         matches_game.insert({
                                       
                         });   
-        }                
+        			})
+			}      
     });
 
 
-    Template.chat.events = {
-=======
+    /*Template.chat.events = {
+		$("#chat_general").click(function() {
+			
+		}
+		$("#chat_partida").click(function() {
+
+		}
+	};
     Template.body.events({
         // Cuando hacen click aquí tenemos que crear una partida
                 
     });
 
+*/
+
+	Template.chat_messages.messages = function () {
+		var messagesColl = Messages_games.find({}, { sort: { time: -1 }});
+		var messages = [];
+		messagesColl.forEach(function(m){
+			messages.push({message: m.message});
+		});
+		return messages;
+	}
 
     Template.input.events = {
->>>>>>> 8de6efaf550c6b580a04d749e73f2b919b058abb
-        'keydown input#chat_messages' : function (event){
+        'keydown input#message' : function (event){
             if (event.which == 13){
-                if(Meteor.us//Aqui tenemos que comprobar si el usuario esta autenticado
-                    var usr_id= //Aqui buscamos el id de usuario
-                    var message = $('#chat_message')                    
-                    var partida
-                    if (message.value.length == 0){
-                        message.val('');
-                    }else{
-                        message.val('');
-                        Messages.insert({
-                            usr_id:Meteor.userId(),     
-                            message:message.value,
-                            date: Date.now(),
-                            game_id: Session.get("current_game") // Pendiente
-                        });
-                }else{
-                    alert("Error de autenticación");        
-                }
-            }
-        }
+               //Aqui tenemos que comprobar si el usuario esta autenticado
+               //Aqui buscamos el id de usuario
+               var message = $('#message')
+               if (message.value.length == 0){
+               	message.val('');
+               }else{
+                  message.val('');
+                  Messages_games.insert({
+               		//usr_id:Meteor.userId(),
+                     message:message.value,
+                     date: Date.now(),
+                     //game_id: Session.get("current_game") // Pendiente
+                  });
+            	}
+        		}
+        	}
+		}
 }
-
-
 
 
 
@@ -119,7 +132,7 @@ if (Meteor.isServer) {
     
     Meteor.publish('matches_game', function() {
         // publish only the field username of every user
-        return Matches_games.find ({}, {fields: {match_name:1;num_players:1;difficulty:1;owner:1;owner_name:1}});  
+        //return Matches_games.find ({}, {fields: {match_name:1;num_players:1;difficulty:1;owner:1;owner_name:1}});
     
     //Meteor.publish("UsersNick", function() {
         // publish only the field username of every user

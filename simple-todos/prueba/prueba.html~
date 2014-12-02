@@ -18,8 +18,8 @@
 
 <body>
 	<div id='partida' style= "position:relative;">
-		<canvas id='tablero' width='980' height='750' 
-		style="position:absolute; left: 0; top: 0;" ></canvas> 
+		<!--<canvas id='tablero' width='980' height='750' 
+		style="position:absolute; left: 0; top: 0;" ></canvas> -->
 	</div>
 	
 	<div id='menu' style= "position:relative;">
@@ -33,27 +33,28 @@
 	</div>
 	
 	<div id='messages' style= "position:relative;">
-		<canvas id='chat' width='200' height='500'
-		style="position:absolute; left: 0; top: 250;"></canvas>
-	</div>
 
+		{{> input}}
+		{{> chat_messages }}
+		<!-- <canvas id='chat' width='200' height='500'
+		style="position:absolute; left: 0; top: 250;"></canvas> -->
+	</div>
 	
 </body>
-<<<<<<< HEAD
-<template name="create">
-=======
+
 <template name="options">
->>>>>>> 8de6efaf550c6b580a04d749e73f2b919b058abb
+
         <div id='game_features'>
                 <button class="close_Div" style="float: right">x</button>
                 <p><label>Nombre de la partida</label><input type="text" size="30" id="nombre" /></p>
                 <p><label>Número de jugadores</label><input type="text" size="30" id="num_jugadores" /></p>
                 <input type="checkbox" name="tablero" id="tablero"><label>Tablero Inteligente</label>
-                        <hr>
+
                         <label>Dificultad</label><br>
                         <input type="radio" name="level" value="Easy" checked> Fácil
                         <input type="radio" name="level" value="Medium"> Medio
                         <input type="radio" name="level" value="Hard"> Difícil
+
                 <!--<hr>
                         <label>Escenario</label><br>
                         <input type="radio" name="escenario" value="Clásico" checked> Clásico
@@ -61,23 +62,41 @@
                         <input type="radio" name="escenario" value="Espacial" class="escenario"> Espacial
                 <hr>-->
                 <td colspan="2">
-<<<<<<< HEAD
                         <button class="submit" id="start_game">Submit</button>
-=======
-                        <button class="submit">Submit</button>
->>>>>>> 8de6efaf550c6b580a04d749e73f2b919b058abb
                         <button class="reset">Reset</button>
                 </td>
         </div>
 </template>
-<<<<<<< HEAD
 
 
-<template name="chat">
+
+<template name="input">
+	<div id="chat_canvas">
+ 		<form id="chat_messages"> Message: </form>
+ 		<input type="text" id="message">
+ 	</div>
+</template>
+
+<template name="chat_messages">
+	<table id="rooms">
+		<tbody>
+			{{#each messages}}
+			<tr>
+				<td>{{message}}</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</template>
+
+<template name="create">
+
+</template>
+
+<template name="join_match">
   
 </template>
-=======
->>>>>>> 8de6efaf550c6b580a04d749e73f2b919b058abb
+
 
 <template name="hello">
   <button>Click Me</button>
