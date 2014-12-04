@@ -1,13 +1,19 @@
 if (Meteor.isClient) {
     /****
     Subscripcion de las listas o bases de datos creadas en el servidor
-    */
-    Meteor.subscribe("usersNick"); //Usersnicks referido a la lista de los usarios registrados en la aplicacion
+    
+    // Meteor.subscribe("usersNick"); //Usersnicks referido a la lista de los usarios registrados en la aplicacion
     Tracker.autorun(function(){
         var game = Session.get("game");
         Meteor.subscribe("messages_game", game); // Mensajes del chat del juego
         Meteor.subscribe("matches_game", game); // Marcador de las partidas
     });
+    */
+    
+	Tracker.autorun(function(){
+		Meteor.subscribe("messages_current_game");
+	});
+	
     /*** Aqui empieza la ejecución del juego: desde el momento en que se cree la partida
     */
     // counter starts at 0
@@ -26,9 +32,6 @@ if (Meteor.isClient) {
     }
     });
 
-	Tracker.autorun(function(){
-		Meteor.subscribe("messages_current_game");
-	});
 
     Template.create.events({
         'click button': function () {
@@ -46,7 +49,8 @@ if (Meteor.isClient) {
                         owner: Meteor.userId(),                   
                         owner_name: Meteor.user().username,
                         score: score,
-                        status: status                        
+                        status: status,
+                        date: Date.now()                        
                     });
             })        
         }
@@ -65,7 +69,7 @@ if (Meteor.isClient) {
     }
     });
 
-    Template.body.events({
+    Template.join_game.events({
         // Cuando hacen click aquí tenemos que unirnos a una plantilla
         'click button': function (){
             $("#join_game").click(function() {
@@ -85,21 +89,28 @@ if (Meteor.isClient) {
 
 		}
 	};
-    Template.body.events({
-        // Cuando hacen click aquí tenemos que crear una partida
-                
+*/
+    Template.draw_matches.events({   
+        var Match_owner = [];            
+        var Match_owners_Coll = Matches_games.find({status: 'waiting'}, {sort: { date:-1}});//lo primero que tenemos que hacer es                                                                                          extraer las ids de creadores de las 
+                                                        //partidas en waiting con esas ids relleno el resto de datos  | tengo que
+                                                        //extarer todos los campos con el find y luego ir extrayendo las ids de 
+                                                        //cada uno con un for each    
+        var Match_name = [];
+        var Match_players = [];
+        var Match_name = Matches_games.find({}, {sort: { date:-1}});//Rellenar bien
+        var Match_players = Matches_games.find({}, {sort: { date:-1}});//Rellenar bien            
     });
 
-*/
 
-	Template.chat_messages.messages = function () {
-		var messagesColl = Messages_games.find({}, { sort: { time: -1 }});
-		var messages = [];
-		messagesColl.forEach(function(m){
-			messages.push({message: m.message});
-		});
-		return messages;
-	}
+    Template.chat_messages.messages = function () {
+	var messagesColl = Messages_games.find({}, { sort: { time: -1 }});
+	var messages = [];
+	messagesColl.forEach(function(m){
+	        messages.push({message: m.message});
+	});
+	return messages;
+    }
 
     Template.input.events = {
         'keydown input#message' : function (event){
@@ -117,10 +128,10 @@ if (Meteor.isClient) {
                      date: Date.now(),
                      //game_id: Session.get("current_game") // Pendiente
                   });
-            	}
-        		}
-        	}
-		}
+               }
+           }
+      	}
+     }
 }
 
 
@@ -146,3 +157,4 @@ if (Meteor.isServer) {
         // code to run on server at startup
     });
 }
+  

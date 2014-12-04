@@ -1,5 +1,6 @@
 <head>
   <link rel="stylesheet" href="base.css" type="text/css" />
+  <img src="indice.jpg">
   <style>
             body {
                 background: url("home/al-10-11/acarrion/Desktop/ISI/.git/masav-plataforma-ISI/simple-todos/Images") repeat;
@@ -22,24 +23,28 @@
 		style="position:absolute; left: 0; top: 0;" ></canvas> -->
 	</div>
 	
-	<div id='menu' style= "position:relative;">
-                <a href="#" class="button">HOME&nbsp;♛</a>
-		<ul><button class= "fondo"> home </button></ul>
-		<ul><button class= "fondo"> home </button></ul>
-		<ul><button class= "fondo"> home </button></ul>
-		<ul><button class= "fondo"> home </button></ul>
-		<ul><button class= "fondo"> home </button></ul>
-		<ul><button class= "fondo"> home </button></ul>
-	</div>
+
+        <div class="btn-group-vertical" id='menu'>
+           <button type="button" class="btn btn-default tamano">Home&nbsp;♛</button>
+           <button type="button" class="btn btn-default tamano">New Game</button>          
+           <button type="button" class="btn btn-default tamano">Aux2</button>
+           <button type="button" class="btn btn-default tamano">Aux3</button>         
+       </div>
 	
 	<div id='messages' style= "position:relative;">
-		<div class="span2">
-			{{> input}}
-			{{> chat_messages }}
-		</div>
+
+		{{> input}}
+		{{> chat_messages }}
 		<!-- <canvas id='chat' width='200' height='500'
 		style="position:absolute; left: 0; top: 250;"></canvas> -->
 	</div>
+
+        <div id='waiting_matches' style= "position:center;" class="jumbotron">
+          <div>        	
+                {{> draw_matches}}		
+          </div>
+          <p><a class="btn btn-primary btn-lg" href="#" role="button">Refresh</a></p>
+        </div>
 	
 </body>
 
@@ -72,11 +77,10 @@
 
 
 <template name="input">
-	<p>Message: <input type="text" id="message"></p>
-	<!--<div id="chat_canvas">
+	<div id="chat_canvas">
  		<form id="chat_messages"> Message: </form>
  		<input type="text" id="message">
- 	</div>-->
+ 	</div>
 </template>
 
 <template name="chat_messages">
@@ -99,6 +103,19 @@
   
 </template>
 
+
+<template name="draw_matches">
+    <ol class="breadcrumb">
+        <li id= "match_name">Prueba</li>
+        <li>|</li>
+        <li id= "match_players">4</li>
+        <li>|</li> 
+        <li id= "match_owner">Pablito</li>
+        <button type="button" class="btn btn-default" aria-label="Left Align">
+             <span class="glyphicon glyphicon-play" aria-hidden="false"></span>
+        </button>               
+    </ol>
+</template>
 
 <template name="hello">
   <button>Click Me</button>
