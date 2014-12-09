@@ -112,6 +112,11 @@ if (Meteor.isClient) {
 	return messages;
     }
 
+    Template.menu_bar.events = {'click #New_G': function(){
+        $('#options').hide();
+        }
+    }
+
     Template.input.events = {
         'keydown input#message' : function (event){
             if (event.which == 13){
@@ -136,6 +141,7 @@ if (Meteor.isClient) {
                passwordSignupFields: "USERNAME_ONLY"
      });
 }
+
 
 
 

@@ -22,15 +22,13 @@
 		<!--<canvas id='tablero' width='980' height='750' 
 		style="position:absolute; left: 0; top: 0;" ></canvas>-->
 	</div>	
-         <div>
+         <div id="signin">
             {{> loginButtons }}
         </div>
         <div class="btn-group-vertical" id='menu'>       
-           <button type="button" class="btn btn-default tamano">Home&nbsp;♛</button>
-           <button type="button" class="btn btn-default tamano">New Game</button>          
-           <button type="button" class="btn btn-default tamano">Aux2</button>
-           <button type="button" class="btn btn-default tamano">Aux3</button>         
-       </div>
+            {{> menu_bar}}
+
+        </div>
 	
 	<div id='messages' style= "position:relative;">
 
@@ -42,7 +40,8 @@
 
         <div id='waiting_matches' style= "position:center;" class="jumbotron">
           <div>        	
-                {{> draw_matches}}		
+                {{> draw_matches}}
+                {{> options}}		
           </div>
           <p><a class="btn btn-primary btn-lg" href="#" role="button">Refresh</a></p>
         </div>
@@ -51,8 +50,7 @@
 
 <template name="options">
 
-        <div id='game_features'>
-                <button class="close_Div" style="float: right">x</button>
+        <div id='game_features'>                
                 <p><label>Nombre de la partida</label><input type="text" size="30" id="nombre" /></p>
                 <p><label>Número de jugadores</label><input type="text" size="30" id="num_jugadores" /></p>
                 <input type="checkbox" name="tablero" id="tablero"><label>Tablero Inteligente</label>
@@ -72,6 +70,7 @@
                         <button class="submit" id="start_game">Submit</button>
                         <button class="reset">Reset</button>
                 </td>
+                <button class="close_Div" style="float: right">Close</button>
         </div>
 </template>
 
@@ -96,8 +95,15 @@
 	</table>
 </template>
 
-<template name="create">
 
+<template name="menu_bar">
+    <button type="button" class="btn btn-default tamano" >Home&nbsp;♛</button>
+    
+    <button type="button" class="btn btn-default tamano" id="New_G">New Game</button>          
+    
+    <button type="button" class="btn btn-default tamano">Aux2</button>
+
+    <button type="button" class="btn btn-default tamano">Aux3</button>         
 </template>
 
 <template name="join_match">
