@@ -40,7 +40,7 @@
 }
 
 #waiting_matches{
- padding: 500px;
+ padding: 100px;
  margin-right: 400px;
  margin-left: 225px;
  border: 2px solid black;
@@ -55,6 +55,9 @@
  color: #A0522D;
 }
 
+#play_game{
+margin-right: 0px;
+}
 
 /*
 .btn btn-default{text-decoration:none; text-align:center; 

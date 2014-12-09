@@ -89,7 +89,7 @@ if (Meteor.isClient) {
 
 		}
 	};
-*/
+
     Template.draw_matches.events({   
         var Match_owner = [];            
         var Match_owners_Coll = Matches_games.find({status: 'waiting'}, {sort: { date:-1}});//lo primero que tenemos que hacer es                                                                                          extraer las ids de creadores de las 
@@ -102,7 +102,7 @@ if (Meteor.isClient) {
         var Match_players = Matches_games.find({}, {sort: { date:-1}});//Rellenar bien            
     });
 
-
+*/
     Template.chat_messages.messages = function () {
 	var messagesColl = Messages_games.find({}, { sort: { time: -1 }});
 	var messages = [];

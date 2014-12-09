@@ -1,9 +1,9 @@
 <head>
   <link rel="stylesheet" href="base.css" type="text/css" />
-  <img src="indice.jpg">
+  <img src="indice.jpeg">
   <style>
             body {
-                background: url("home/al-10-11/acarrion/Desktop/ISI/.git/masav-plataforma-ISI/simple-todos/Images") repeat;
+                background: url("home/al-10-11/acarrion/Desktop/ISI/.git/masav-plataforma-ISI/simple-todos/prueba/indice.jpeg") repeat;
             }
             #banner {
                 position: absolute;
@@ -20,11 +20,12 @@
 <body>
 	<div id='partida' style= "position:relative;">
 		<!--<canvas id='tablero' width='980' height='750' 
-		style="position:absolute; left: 0; top: 0;" ></canvas> -->
-	</div>
-	
-
-        <div class="btn-group-vertical" id='menu'>
+		style="position:absolute; left: 0; top: 0;" ></canvas>-->
+	</div>	
+         <div>
+            {{> loginButtons }}
+        </div>
+        <div class="btn-group-vertical" id='menu'>       
            <button type="button" class="btn btn-default tamano">Home&nbsp;♛</button>
            <button type="button" class="btn btn-default tamano">New Game</button>          
            <button type="button" class="btn btn-default tamano">Aux2</button>
@@ -111,9 +112,15 @@
         <li id= "match_players">4</li>
         <li>|</li> 
         <li id= "match_owner">Pablito</li>
-        <button type="button" class="btn btn-default" aria-label="Left Align">
-             <span class="glyphicon glyphicon-play" aria-hidden="false"></span>
-        </button>               
+        <button id="play_game" type="button" class="btn btn-default">&nbsp;▶</button>             
+    </ol>
+     <ol class="breadcrumb">
+        <li id= "match_name">Prueba 2</li>
+        <li>|</li>
+        <li id= "match_players">2</li>
+        <li>|</li> 
+        <li id= "match_owner">Pepito</li>
+        <button id="play_game" type="button" class="btn btn-default">&nbsp;▶</button>       
     </ol>
 </template>
 

@@ -56,6 +56,11 @@
 }
 
 
+
+#login-buttons{
+ display: block;
+}
+
 /*
 .btn btn-default{text-decoration:none; text-align:center; 
          padding:4px 50px; 
