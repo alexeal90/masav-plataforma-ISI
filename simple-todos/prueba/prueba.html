@@ -37,6 +37,12 @@
 		<!-- <canvas id='chat' width='200' height='500'
 		style="position:absolute; left: 0; top: 250;"></canvas> -->
 	</div>
+    <br>
+    <br>
+    <div id='points_players' style= "position:right;">
+          {{> players}}
+    </div>
+
 
         <div id='waiting_matches' style= "position:center;" class="jumbotron">
           <div>        	
@@ -97,7 +103,7 @@
 
 
 <template name="menu_bar">
-    <button type="button" class="btn btn-default tamano" >Home&nbsp;♛</button>
+    <button type="button" class="btn btn-default tamano" >Home&nbsp;</button>
     
     <button type="button" class="btn btn-default tamano" id="New_G">New Game</button>          
     
@@ -118,7 +124,7 @@
         <li id= "match_players">4</li>
         <li>|</li> 
         <li id= "match_owner">Pablito</li>
-        <button id="play_game" type="button" class="btn btn-default">&nbsp;▶</button>             
+        <button id="play_game" type="button" class="btn btn-default">&nbsp;</button>             
     </ol>
      <ol class="breadcrumb">
         <li id= "match_name">Prueba 2</li>
@@ -126,8 +132,23 @@
         <li id= "match_players">2</li>
         <li>|</li> 
         <li id= "match_owner">Pepito</li>
-        <button id="play_game" type="button" class="btn btn-default">&nbsp;▶</button>       
+        <button id="play_game" type="button" class="btn btn-default">&nbsp;</button>       
     </ol>
+</template>
+
+
+<template name="players">
+    <h2> <strong>points</strong>({{match_name}}) </h2>
+    <table >
+        <tbody>
+            {{#each players_points}}
+            <tr>
+                <td>{{owner_name}}</td>
+                <td>puntos</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
 </template>
 
 <template name="hello">
