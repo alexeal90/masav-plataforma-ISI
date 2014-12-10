@@ -157,16 +157,16 @@ if (Meteor.isServer) {
     });  //
     
 
-    Meteor.publish('matches_game', function() { //N
+   /* ARREGLAR Meteor.publish('matches_game', function() { //N
         // publish only the field username of every user N
         return Matches_games.find ({}, {fields: {match_name:1;num_players:1;difficulty:1;owner:1;owner_name:1;score:1;status:1;players_array:1;}});  //N
     }); //N
-    
+    */
     
     //Meteor.publish("UsersNick", function() {
         // publish only the field username of every user
     //    return Meteor.users.find ({}, {fields: {username:1}});
-    });
+    
     
     Meteor.startup(function () {
         // code to run on server at startup
@@ -177,13 +177,15 @@ if (Meteor.isServer) {
 	return Meteor.users.find({},{fields: {nick:1,usr_score:1, played_games:1,won_games:1}}); //N
     }); //N
     
-    Meteor.startup(function () { // N
+    /* ARREGLAR
+	Meteor.startup(function () { // N
         // code to run on server at startup //N
 	if (Games.find().count() == 0) { //N
 		Games.insert({name: "FrootWars"}); //N
 		Games.insert({name: "AlienInvasion"}); //N
 		Games.insert({name: "Carcassone"}); //N
    	};
-    });
+    });*/
+    
 }
   
