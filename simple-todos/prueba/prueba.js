@@ -10,6 +10,10 @@ if (Meteor.isClient) {
     });
     */
     
+	Meteor.subscribe("messages_game"); // N Mensajes del chat del juego
+        Meteor.subscribe("matches_game"); // N Marcador de las partidas
+	Meteor.subscribe("users_data"); // N
+
 	Tracker.autorun(function(){
 		Meteor.subscribe("messages_current_game");
 	});
@@ -152,10 +156,12 @@ if (Meteor.isServer) {
         return Messages_games.find ({}, {sort: {time:-1}});
     });  //
     
+
+    Meteor.publish('matches_game', function() { //N
+        // publish only the field username of every user N
+        return Matches_games.find ({}, {fields: {match_name:1;num_players:1;difficulty:1;owner:1;owner_name:1;score:1;status:1;players_array:1;}});  //N
+    }); //N
     
-    Meteor.publish('matches_game', function() {
-        // publish only the field username of every user
-        //return Matches_games.find ({}, {fields: {match_name:1;num_players:1;difficulty:1;owner:1;owner_name:1}});
     
     //Meteor.publish("UsersNick", function() {
         // publish only the field username of every user
@@ -164,6 +170,20 @@ if (Meteor.isServer) {
     
     Meteor.startup(function () {
         // code to run on server at startup
+    });
+
+    // Publicacion del campo puntuacion para que puedan acceder los clientes.
+    Meteor.publish("users_data", function () { //N
+	return Meteor.users.find({},{fields: {nick:1,usr_score:1, played_games:1,won_games:1}}); //N
+    }); //N
+    
+    Meteor.startup(function () { // N
+        // code to run on server at startup //N
+	if (Games.find().count() == 0) { //N
+		Games.insert({name: "FrootWars"}); //N
+		Games.insert({name: "AlienInvasion"}); //N
+		Games.insert({name: "Carcassone"}); //N
+   	};
     });
 }
   
