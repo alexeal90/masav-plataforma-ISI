@@ -2,15 +2,14 @@ if (Meteor.isClient) {
     /****
     Subscripcion de las listas o bases de datos creadas en el servidor
     **/
-     Meteor.subscribe("games"); 
+     Meteor.subscribe("all_games"); 
      Meteor.subscribe("users_data"); 
      
      Tracker.autorun(function(){
-        var game = Session.get("game");
-        Meteor.subscribe("messages_game", game); // Mensajes del chat del juego
-        Meteor.subscribe("matches_game", game); // Marcador de las partidas
-        
-        
+        var current_game = Session.get("current_game");
+        Meteor.subscribe("messages_current_game", current_game); // Mensajes del chat del juego
+        Meteor.subscribe("matches_game", current_game); // Marcador de las partidas
+             
     });
     
     
@@ -23,10 +22,14 @@ if (Meteor.isClient) {
     // counter starts at 0
     //
     Meteor.startup(function(){
-        Session.set("game", "none");
-            $('#CarcassoneContainer').hide();
+        Session.set("current_game", "none");
+            $('#gamecontainer').hide();
+    			$('#container').hide();
+    			$('#gamecarcas').hide();
+    			$('#waiting_matches').hide();
+    			
             $(document).on("click", ".alert .close", function(e) {
-            $('#CarcassoneContainer').show();       
+            	$(this).parent().hide();       
         });
     });
     Session.setDefault("counter", 0);
@@ -93,14 +96,42 @@ if (Meteor.isClient) {
 			}      
     });
 
+	Template.menu_bar.games = function (){
+		 return Games.find();
+	}
 
-    /*Template.chat.events = {
-		$("#chat_general").click(function() {
-			
-		}
-		$("#chat_partida").click(function() {
-		}
-	};
+	Template.menu_bar.events = {
+		 'click #AI_button': function () {
+		 	  $('#container').show();
+		     $('#gamecontainer').hide();
+		     $('#gamecarcas').hide();
+		     $('#waiting_matches').hide();
+		     var game = Games.findOne({name:"AlienInvasion"});
+		     Session.set("current_game", game._id);
+		 },
+		 'click #FW_button': function () {
+		     $('#container').hide();
+		     $('#gamecontainer').show();
+		     $('#gamecarcas').hide();
+		     $('#waiting_matches').hide();
+		     var game = Games.findOne({name:"FrootWars"});
+		     Session.set("current_game", game._id);
+		 },
+		 'click #CC_button': function () {
+		     $('#container').hide();
+		     $('#gamecontainer').hide();
+		     $('#gamecarcas').show();
+		     $('#waiting_matches').hide();
+		     var game = Games.findOne({name:"Carcassonne"});
+		     Session.set("current_game", game._id);
+		 },
+		 'click #New_G': function () {
+		     $('#options').hide();
+		 }
+	}
+
+
+    /*
     Template.draw_matches.events({   
         var Match_owner = [];            
         var Match_owners_Coll = Matches_games.find({status: 'waiting'}, {sort: { date:-1}});//lo primero que tenemos que hacer es                                                                                          extraer las ids de creadores de las 
@@ -113,39 +144,46 @@ if (Meteor.isClient) {
         var Match_players = Matches_games.find({}, {sort: { date:-1}});//Rellenar bien            
     });
 */
-    Template.chat_messages.messages = function () {
-	var messagesColl = Messages_games.find({}, { sort: { time: -1 }});
-	var messages = [];
-	messagesColl.forEach(function(m){
-	        messages.push({message: m.message});
-	});
-	return messages;
-    }
 
-    Template.menu_bar.events = {'click #New_G': function(){
-        $('#options').hide();
-        }
-    }
+    Template.chat_messages.messages = function () {
+    
+			var messagesColl = Messages_games.find({}, { sort: { time: -1 }});
+			var messages = [];
+			
+			messagesColl.forEach(function(m){
+					var userName = Meteor.users.findOne(m.user_id).username;
+					messages.push({message: m.message});
+			});
+			
+			return messages;
+	 }
+
+	 Template.chat_messages.gameName = function (){
+	 	  var game_id = Session.get("current_game");
+	 	  if (game_id)
+	 	      var game_name = Games.findOne({_id: game_id}).name;
+	 	  return game_name;
+	 }
 
    
    // Mostrar la puntuación de cada jugador, a partir de la base de datos de users_data
-   Template.players.players_points = function(){
+    Template.players.players_points = function(){
       
-   var users_data= Users_data.find ({}, {sort: {time:-1}});
-    var list_players = [];
-    users_data.forEach (function (u) {
-        var user = Meteor.users.findOne({_id:partida.usr_id});
-        if(user){
-            list_players.push({puntos: u.usr_score, player:u.nick}) // El         
-        }
-    });
+		 var users_data= Users_data.find ({}, {sort: {time:-1}});
+		 var list_players = [];
+		 users_data.forEach (function (u) {
+		     var user = Meteor.users.findOne({_id:partida.usr_id});
+		     if(user){
+		         list_players.push({puntos: u.usr_score, player:u.nick}) // El         
+		     }
+		 });
     
-    return list_players;    
-    }
+    	 return list_players;    
+     }
 
 
 
-    Template.input.events = {
+     Template.input.events = {
         'keydown input#message' : function (event){
             if (event.which == 13){
                //Aqui tenemos que comprobar si el usuario esta autenticado
@@ -176,10 +214,16 @@ if (Meteor.isClient) {
 
 
 if (Meteor.isServer) {
-    Meteor.publish('messages_game', function() {
-        // publish only the field username of every user
-        return Messages_games.find ({}, {sort: {time:-1}});
-    });  //
+
+Games = new Meteor.Collection('games');
+Messages_games =new Meteor.Collection('messages_game');
+Matches_games =new Meteor.Collection('matches_game');
+Users_data = new Meteor.Collection('users_data');
+
+    Meteor.publish("messages_current_game", function (current_game) {
+    		return Messages_games.find({game_id: current_game}, 
+					{limit:10, sort: {time:-1}});
+	 });
     
     
     Meteor.publish('matches_game', function() {
@@ -188,7 +232,24 @@ if (Meteor.isServer) {
     
     });
     
-    Meteor.startup(function () {
-        // code to run on server at startup
+    Meteor.publish("all_games", function () {
+		 // publish every field of every game
+		 return Games.find();
+	 });
+	 
+	 Messages_games.allow({
+		insert: function(userId, doc){
+		// Only authenticated users can insert messages
+		return Meteor.userId();
+    	}
     });
+    
+	 Meteor.startup(function() {
+		 if (Games.find().count() == 0) {
+			Games.insert({name: "FrootWars"});
+			Games.insert({name: "AlienInvasion"});
+			Games.insert({name: "Carcassonne"});
+    	 };
+    });
+ 
 }

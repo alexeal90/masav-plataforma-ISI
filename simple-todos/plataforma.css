@@ -39,6 +39,15 @@
 
 }
 
+#game_features{
+ background: white;
+ padding: 100px;
+}
+
+#start_game{
+ margin-left: 225px;
+}
+
 #waiting_matches{
  padding: 100px;
  margin-right: 400px;
@@ -46,7 +55,13 @@
  border: 2px solid black;
  background: red;
  border-radius: 4px;
+}
 
+.play_game{
+ border: 2px solid #003B62;
+ position: relative;
+ float: right;
+ background: #00FFFF;
 }
 
 .tamano {
@@ -55,7 +70,9 @@
  color: #A0522D;
 }
 
-
+.estilopartida{
+ padding: 20px;
+};
 
 #login-buttons{
  display: block;
