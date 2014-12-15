@@ -23,6 +23,7 @@
             	$(this).parent().hide();       
         });
         $('#game_features').hide();
+        $('waiting_for_players').hide();
     });
 
 
@@ -32,8 +33,11 @@
             match_name= parse($('#nombre').val());
             var score= 0;
             var status= 'waiting';
-                     
+            n_players= parseInt($('input[name=n_players]:checked', '#game_features').val());         
             $("#start_game").click(function() {
+                    $('#game_features').hide();
+                    $('#display_matches').hide();
+                    $('waiting_for_players').show();
                     matches_game.insert({
                         match_name: match_name,
                         num_players: num_players,
@@ -44,11 +48,13 @@
                         status: status,
                         date: Date.now()                        
                     });
+                   
+                     
             })        
         },
         'click #close_options': function () {
                 $('#game_features').hide();
-                $('#display_matches').show();
+                $('#display_matches').hide();
                 var game = Games.findOne({name:"Carcassonne"});
 		     		 Session.set("current_game", game._id);
         }
@@ -153,7 +159,7 @@ console.log("Template.menu_bar.events");
 	return messages;
     }
     
-    Template.chat_messages.gameName = function (){
+    Template.input.gameName = function (){
 	var game_id = Session.get("current_game");
 	if (game_id)
 	    var game_name = Games.findOne({_id: game_id}).name;
