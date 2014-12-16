@@ -33,6 +33,9 @@
             match_name= parse($('#nombre').val());
             var score= 0;
             var status= 'waiting';
+	    var usuid = Meteor.userId();
+	    var usu = Meteor.users.findOne(usuid);
+                     
             n_players= parseInt($('input[name=n_players]:checked', '#game_features').val());         
             $("#start_game").click(function() {
                     $('#game_features').hide();
@@ -49,7 +52,7 @@
                         date: Date.now()                        
                     });
                    
-                     
+                    Meteor.call('add_player',owner_name,match_name,num_players,difficulty,score,status,date);
             })        
         },
         'click #close_options': function () {
