@@ -4,16 +4,11 @@
   margin-left:200px;
   width:480px;
 }
-
 #messages {
-	position: relative;
-	width: 250px;
-	top: 200px;
-	right: 1030px;
-	float:right;
-	margin-right: 2px;
-	color: black;
-	
+  float: left;
+  margin-top:5px;
+  margin-left:0px;
+  width:480px;
 }
 /* Give canvas a background */
 
@@ -38,8 +33,10 @@
 }
 
 #menu{
- position: relative;
- float: left;
+
+ margin-right: 1146px;
+ margin-left: 2px;
+
 }
 
 #game_features{
@@ -54,11 +51,10 @@
 #waiting_matches{
  padding: 100px;
  margin-right: 400px;
- margin-left: 300px;
+ margin-left: 225px;
  border: 2px solid black;
  background: red;
  border-radius: 4px;
-
 }
 
 .play_game{

@@ -5,6 +5,9 @@
      Meteor.subscribe("all_games"); 
      Meteor.subscribe("users_data"); 
      
+     var Busy = false;
+     var match_name;
+         
      Tracker.autorun(function(){
         var current_game = Session.get("current_game");
         Meteor.subscribe("messages_current_game", current_game); // Mensajes del chat del juego
@@ -23,60 +26,91 @@
             	$(this).parent().hide();       
         });
         $('#game_features').hide();
-        $('waiting_for_players').hide();
+        $('#waiting_for_players').hide();
     });
 
+    var currentUser = null;
+		Tracker.autorun(function(){
+		console.log("current user: " + currentUser);
+		currentUser = Meteor.userId();
+		console.log("current user: " + currentUser);
+	});
 
-   Template.options.events({
-        'click #start_game': function () {
-            // Cuando hacen click aquí tenemos que crear una partida
-            match_name= parse($('#nombre').val());
-            var score= 0;
-            var status= 'waiting';
-	    var usuid = Meteor.userId();
-	    var usu = Meteor.users.findOne(usuid);
-                     
-            n_players= parseInt($('input[name=n_players]:checked', '#game_features').val());         
-            $("#start_game").click(function() {
-                    $('#game_features').hide();
-                    $('#display_matches').hide();
-                    $('waiting_for_players').show();
-                    matches_game.insert({
-                        match_name: match_name,
-                        num_players: num_players,
-                        difficulty: difficulty,
-                        owner: Meteor.userId(),                   
-                        owner_name: Meteor.user().username,
-                        score: score,
-                        status: status,
-                        date: Date.now()                        
-                    });
-                   
-                    Meteor.call('add_player',owner_name,match_name,num_players,difficulty,score,status,date);
-            })        
+
+   Template.options.events({                 
+            'click #start_game': function () {
+		
+	        match_name=$('#nombre').val();
+		    var score= 0;
+		    var status= 'waiting';
+		    var usuid = Meteor.userId();
+		    var usu = Meteor.users.findOne(usuid);
+		   
+		    match_created = Matches_games.findOne({match_name:match_name});
+		    console.log(match_created);
+		    if (match_created != undefined){ 
+		    	    alert("The name of the match is already used, please, try other.");
+		    }else{
+			    n_players= parseInt($('input[name=n_players]:checked', '#game_features').val());   
+		            $('#game_features').hide();
+		            $('#display_matches').hide();
+		            $('waiting_for_players').show();
+
+		            Matches_games.insert({
+				id_user: usuid,
+		                match_name: match_name,
+		                num_players: n_players,
+		                //difficulty: difficulty,
+		                //owner: Meteor.userId(),                   
+		                //owner_name: Meteor.users().nick,
+		                //score: score,
+		                //status: status,
+		                //date: Date.now()                   
+		            });
+			    console.log(n_players);	
+			    console.log(match_name);
+			    Busy = true;
+		            //Meteor.call('add_player',match_name);
+                $('#waiting_for_players').show();
+		   }
         },
+
         'click #close_options': function () {
                 $('#game_features').hide();
-                $('#display_matches').hide();
+                $('#display_matches').show();
                 var game = Games.findOne({name:"Carcassonne"});
 		     		 Session.set("current_game", game._id);
+        },
+
+	    'click #wait_cancel': function () {
+                $('#waiting_for_players').hide();
+                $('#display_matches').show();
+
+		match_id = Matches_games.findOne({match_name:match_name});
+
+		console.log(match_id);
+		console.log(match_id._id);
+		Matches_games.remove(match_id._id)
+                alert("Su partida ha sido cancelada satisfactoriamente.");
+		Busy = false;
         }
     });
                  
+      
 
-    Template.join_match.events({
-        
+    Template.join_match.events({        
         'click button': function (){
-            //
-        var array_players = [];
-        $("#join_match").click(function() {
-                        matches_game.insert({
-                             array_player_names: array_players.push({name_player:Meteor.userId()})         
-                        });   
-        
-        })               
-    }
-    }); //Nos falta la funcion que nos daran los de la i.a para enchufarles lo que se extraiga del array_player_names
+            var array_players = [];
+            $("#join_match").click(function() {
+                            matches_game.insert({
+                                 array_player_names: array_players.push({name_player:Meteor.userId()})         
+                            });               
+            })               
+        }
+    });
+
+
+ //Nos falta la funcion que nos daran los de la i.a para enchufarles lo que se extraiga del array_player_names
 
     // Para unirse a un juego (carcassone, alliensInvasion...)
     // Template.join_game.events({
@@ -91,47 +125,56 @@
     // 			}      
     // });
 
-//	Template.menu_bar.games = function (){
-//		 return Games.find();
-//	}
-
-	Template.menu_bar.events = {
+Template.menu_bar.events = {
 		 'click #AI_button': function () {
-console.log("Template.menu_bar.events");
-		     $('#container').show();
-		     $('#gamecontainer').hide();
-		     $('#gamecarcas').hide();
-		     $('#waiting_matches').hide();
-		     var game = Games.findOne({name:"AlienInvasion"});
-		     Session.set("current_game", game._id);
+		     if(!Busy){
+			     console.log("Template.menu_bar.events");
+			     $('#container').show();
+			     $('#gamecontainer').hide();
+			     $('#gamecarcas').hide();
+			     $('#waiting_matches').hide();
+			     var game = Games.findOne({name:"AlienInvasion"});
+			     Session.set("current_game", game._id);
+		     }
 		 },
 		 'click #FW_button': function () {
-		     $('#container').hide();
-		     $('#gamecontainer').show();
-		     $('#gamecarcas').hide();
-		     $('#waiting_matches').hide();
-		     var game = Games.findOne({name:"FrootWars"});
-		     Session.set("current_game", game._id);
+		     if(!Busy){
+			     $('#container').hide();
+			     $('#gamecontainer').show();
+			     $('#gamecarcas').hide();
+			     $('#waiting_matches').hide();
+			     var game = Games.findOne({name:"FrootWars"});
+			     Session.set("current_game", game._id);
+		     }
 		 },
 		 'click #CC_button': function () {
-		     $('#container').hide();
-		     $('#gamecontainer').hide();
-		     $('#gamecarcas').hide();
-		     $('#waiting_matches').show();
-		     $('#display_matches').show();
-		     $('#game_features').hide();
-		     var game = Games.findOne({name:"Carcassonne"});
-		     Session.set("current_game", game._id);
+		     if(!Busy){
+			     $('#container').hide();
+			     $('#gamecontainer').hide();
+			     $('#gamecarcas').hide();
+			     $('#waiting_matches').show();
+			     $('#display_matches').show();
+			     $('#game_features').hide();
+			     var game = Games.findOne({name:"Carcassonne"});
+			     Session.set("current_game", game._id);
+		     }
 		 },
+		
 		 'click #New_G': function () {
-			  $('#container').hide();
-		     $('#gamecontainer').hide();
-		     $('#game_features').show();
-		     $('#waiting_matches').show();
-           $('#display_matches').hide();
-   
+                     if(!Busy){
+		             $('#container').hide();
+		             $('#gamecontainer').hide();
+		             $('#game_features').show();
+		             $('#waiting_matches').show();
+                             $('#display_matches').hide();
+                             var game = Games.findOne({name:"Carcassonne"});
+		             Session.set("current_game", game._id);            
+	             }	
+                 }
+	}
 
-		 }
+	Template.chat.none = function (){
+		 return Session.get("current_game") == "none";
 	}
 
 
@@ -149,25 +192,29 @@ console.log("Template.menu_bar.events");
     });
 */
 
-    Template.chat_messages.messages = function () {
+   Template.chat_messages.messages = function () {
 
-	var messagesColl = Messages_games.find({}, { sort: { time: -1 }});
-	var messages = [];
-	
-	messagesColl.forEach(function(m){
-	    var userName = Meteor.users.findOne(m.user_id).username;
-	    messages.push({message: m.message});
-	});
-	
-	return messages;
-    }
+		 var messagesColl =  Messages_games.find({}, { sort: { time: -1 }});
+		 var messages = [];
+
+		 messagesColl.forEach(function(m){
+		 		console.log('traza1');
+		     var userName = Meteor.users.findOne(m.user_id).username;
+		     messages.push({name: userName , message: m.message});
+		     console.log('traza2');
+		 });
+
+    	return messages;
+	}
     
-    Template.input.gameName = function (){
-	var game_id = Session.get("current_game");
-	if (game_id)
-	    var game_name = Games.findOne({_id: game_id}).name;
-	return game_name;
-    }
+	Template.chat.gameName = function (){
+		 var game_id = Session.get("current_game");         
+		 if (game_id)
+              var game_name = Games.findOne({_id: game_id}).name; 
+         console.log("**************" + game_name);		 
+         return game_name;
+	}
+
     
     
    // Mostrar la puntuación de cada jugador, a partir de la base de datos de users_data
@@ -185,28 +232,31 @@ console.log("Template.menu_bar.events");
     // 	 return list_players;    
     //  }
 
-
-
-     Template.input.events = {
-        'keydown input#message' : function (event){
-            if (event.which == 13){
-               //Aqui tenemos que comprobar si el usuario esta autenticado
-               //Aqui buscamos el id de usuario
-               var message = $('#message')
-               if (message.value.length == 0){
-               	message.val('');
-               }else{
-                  message.val('');
-                  Messages_games.insert({
-               		//usr_id:Meteor.userId(),
-                     message:message.value,
-                     date: Date.now(),
-                     //game_id: Session.get("current_game") // Pendiente
-                  });
-               }
-           }
-      	}
-     }
-     Accounts.ui.config({
-               passwordSignupFields: "USERNAME_ONLY"
-     });
+	Template.input.events = {
+		 'keydown input#message' : function (event) {
+		     if (event.which == 13) {
+		     console.log('has pulsado intro');
+		         if (Meteor.userId()){
+		             var user_id = Meteor.user()._id;
+		             var message = $('#message');
+		             if (message.value != '') {
+		             	console.log('guardo el mensaje');
+		                 Messages_games.insert({
+		                     user_id: user_id,
+		                     message: message.val(),
+		                     time: Date.now(),
+		                     game_id: Session.get("current_game")
+		                 });
+		                 message.val('')
+		             }
+		         }
+		         else {
+		             $("#login-error").show();
+		         }
+		     }
+		 } 
+	}
+	
+   Accounts.ui.config({
+             passwordSignupFields: "USERNAME_ONLY"
+   });

@@ -30,8 +30,7 @@
 	
 	<div id='messages' style= "position:relative;">
 
-		{{> input}}
-		{{> chat_messages }}
+		{{> chat}}
 	</div>
    <br>
    <br>
@@ -56,10 +55,10 @@
                 <p><label>Nombre de la partida</label><input type="text" size="30" id="nombre" /></p>
                 <hr>
                         <label>Número de Jugadores </label><br>
-                        <input type="radio" name="n_players" value="0" checked> 2
-                        <input type="radio" name="n_players" value="1"> 3
-                        <input type="radio" name="n_players" value="2"> 4
-                        <input type="radio" name="n_" value="3"> 5
+                        <input type="radio" name="n_players" value="2" checked> 2
+                        <input type="radio" name="n_players" value="3"> 3
+                        <input type="radio" name="n_players" value="4"> 4
+                        <input type="radio" name="n_players" value="5"> 5
                 <hr>
                 <td colspan="2">
                         <p><a class="btn btn-primary btn-lg" id="start_game" role="button">Crear</a></p>
@@ -68,37 +67,47 @@
         <div id='waiting_for_players' class="jumbotron breadcrumb" >
                 <h1>Esperando jugadores</h1>               
                 <td colspan="2">
-                        <p><a class="btn btn-primary btn-lg" id="wait_start" role="button">Empezar</a></p>
+                         <button class="btn btn-primary btn-lg" id="wait_start">Empezar</button>                        
                 </td>
                 <td colspan="2">
-                        <p><a class="btn btn-primary btn-lg" id="wait_cancel" role="button">Cancelar</a></p>
+		        <button class="btn btn-primary btn-lg" id="wait_cancel">Cancelar</button> 
                 </td>
-       </div>
+        </div>
 </template>
 
-
-     
-
-
+<template name="chat">
+  {{#if none }}
+  <h3> Chat General </h3>
+  {{else}}
+  <h3> Chat {{gameName}} </h3>
+  {{/if}}
+  
+  {{> input    }}
+  {{> chat_messages }}
+</template>
 
 <template name="input">
-        <h3> Chat {{gameName}} </h3>
-	<div id="chat_canvas">
- 		<form id="chat_messages"> Message: </form>
- 		<input type="text" id="message">
- 	</div>
+  <p>Message: <input type="text" id="message"></p>
+
+  
+  <div class="alert fade in" id="login-error" style="display:none;">
+    <button type="button" class="close">x</button>
+    You must be signed in to post messages.
+  </div>
+
 </template>
 
 <template name="chat_messages">
-	<table id="rooms">
-		<tbody>
-			{{#each messages}}
-			<tr>
-				<td>{{message}}</td>
-			</tr>
-			{{/each}}
-		</tbody>
-	</table>
+  <table id="rooms" class="table table-striped">  
+    <tbody>
+      {{#each messages}}
+      <tr>
+	<td><strong>{{name}}:</strong></td>
+	<td>{{message}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </template>
 
 
