@@ -5,7 +5,7 @@
      Meteor.subscribe("all_games"); 
      Meteor.subscribe("users_data"); 
      
-     var Busy = false;
+     var Busy = {OnlyBusy:false,Busy_playing:false};
      var match_name;
          
      Tracker.autorun(function(){
@@ -26,7 +26,8 @@
             	$(this).parent().hide();       
         });
         $('#game_features').hide();
-        $('#waiting_for_players').hide();
+       // $('#waiting_for_players').hide();
+        $('#display_match_started').hide();
     });
 
     var currentUser = null;
@@ -38,41 +39,38 @@
 
 
    Template.options.events({                 
-            'click #start_game': function () {
-		
-	        match_name=$('#nombre').val();
-		    var score= 0;
-		    var status= 'waiting';
-		    var usuid = Meteor.userId();
-		    var usu = Meteor.users.findOne(usuid);
-		   
-		    match_created = Matches_games.findOne({match_name:match_name});
-		    console.log(match_created);
-		    if (match_created != undefined){ 
-		    	    alert("The name of the match is already used, please, try other.");
-		    }else{
+        'click #start_game': function () {
+		     match_name=$('#nombre').val();
+		     var score= 0;
+		     var status= 'Waiting';
+		     var usuid = Meteor.userId();
+		     var usu = Meteor.users.findOne(usuid);
+             match_object_insert = Matches_games.findOne({match_name:match_name});
+		     match_created = Matches_games.findOne({match_name:match_name});
+		     console.log(match_created);
+		     if (match_created != undefined){ 
+		        alert("The name of the match is already used, please, try other.");
+		     }else{
 			    n_players= parseInt($('input[name=n_players]:checked', '#game_features').val());   
-		            $('#game_features').hide();
-		            $('#display_matches').hide();
-		            $('waiting_for_players').show();
-
-		            Matches_games.insert({
-				id_user: usuid,
-		                match_name: match_name,
-		                num_players: n_players,
-		                //difficulty: difficulty,
-		                //owner: Meteor.userId(),                   
-		                //owner_name: Meteor.users().nick,
-		                //score: score,
-		                //status: status,
-		                //date: Date.now()                   
-		            });
+		        $('#game_features').hide();
+		        $('#display_matches').hide();
+		        Matches_games.insert({
+				    id_user: usuid,
+		            match_name: match_name,
+		            num_players: n_players,
+		                    //difficulty: difficulty,
+		                    //owner: Meteor.userId(),                   
+		                    //owner_name: Meteor.users().nick,
+		                    //score: score,
+		            status: status,
+		                    //date: Date.now()                   
+		        });
 			    console.log(n_players);	
 			    console.log(match_name);
-			    Busy = true;
-		            //Meteor.call('add_player',match_name);
-                $('#waiting_for_players').show();
-		   }
+			    Busy.OnlyBusy = true;
+                $('waiting_for_players').show();
+		                //Meteor.call('add_player',match_name);
+             }
         },
 
         'click #close_options': function () {
@@ -85,15 +83,27 @@
 	    'click #wait_cancel': function () {
                 $('#waiting_for_players').hide();
                 $('#display_matches').show();
+                match_object = Matches_games.findOne({match_name:match_name});
+        		console.log(match_object);
+        		console.log(match_object._id);
+		        Matches_games.remove(match_object._id)
+                        alert("Su partida ha sido cancelada satisfactoriamente.");
+		        Busy.OnlyBusy = false;
+        },
 
-		match_id = Matches_games.findOne({match_name:match_name});
+        'click #wait_start': function () {
+                $('#waiting_for_players').hide();
+		        match_object2 = Matches_games.findOne({match_name:match_name});
+		
+		        console.log(match_object2);
+	  	        console.log(match_object2._id);
 
-		console.log(match_id);
-		console.log(match_id._id);
-		Matches_games.remove(match_id._id)
-                alert("Su partida ha sido cancelada satisfactoriamente.");
-		Busy = false;
-        }
+                alert("Su partida ha comenzado.");
+		        Busy.Busy_Playing = true;
+		        Busy.OnlyBusy = false;
+		        Matches_games.update(match_object2._id,{$set: {status: "Started"}});
+		        $('#display_match_started').show();
+	}
     });
                  
       
@@ -127,7 +137,7 @@
 
 Template.menu_bar.events = {
 		 'click #AI_button': function () {
-		     if(!Busy){
+		     if(!Busy.OnlyBusy){
 			     console.log("Template.menu_bar.events");
 			     $('#container').show();
 			     $('#gamecontainer').hide();
@@ -138,7 +148,7 @@ Template.menu_bar.events = {
 		     }
 		 },
 		 'click #FW_button': function () {
-		     if(!Busy){
+		     if(!Busy.OnlyBusy){
 			     $('#container').hide();
 			     $('#gamecontainer').show();
 			     $('#gamecarcas').hide();
@@ -148,7 +158,7 @@ Template.menu_bar.events = {
 		     }
 		 },
 		 'click #CC_button': function () {
-		     if(!Busy){
+		     if(!Busy.OnlyBusy){
 			     $('#container').hide();
 			     $('#gamecontainer').hide();
 			     $('#gamecarcas').hide();
@@ -161,16 +171,20 @@ Template.menu_bar.events = {
 		 },
 		
 		 'click #New_G': function () {
-                     if(!Busy){
-		             $('#container').hide();
-		             $('#gamecontainer').hide();
-		             $('#game_features').show();
-		             $('#waiting_matches').show();
-                             $('#display_matches').hide();
-                             var game = Games.findOne({name:"Carcassonne"});
-		             Session.set("current_game", game._id);            
-	             }	
-                 }
+             if(!Busy.OnlyBusy && !Busy.Busy_Playing){
+                if(Meteor.userId()){
+		           $('#container').hide();
+		           $('#gamecontainer').hide();
+		           $('#game_features').show();
+		           $('#waiting_matches').show();
+                   $('#display_matches').hide();
+                   var game = Games.findOne({name:"Carcassonne"});
+		           Session.set("current_game", game._id);            
+	            }else{
+                   alert("You must be logged in for create a match");
+                }	
+            }
+         }
 	}
 
 	Template.chat.none = function (){
@@ -178,19 +192,52 @@ Template.menu_bar.events = {
 	}
 
 
-    /*
-    Template.draw_matches.events({   
-        var Match_owner = [];            
-        var Match_owners_Coll = Matches_games.find({status: 'waiting'}, {sort: { date:-1}});//lo primero que tenemos que hacer es                                                                                          extraer las ids de creadores de las 
-                                                        //partidas en waiting con esas ids relleno el resto de datos  | tengo que
-                                                        //extarer todos los campos con el find y luego ir extrayendo las ids de 
-                                                        //cada uno con un for each    
-        var Match_name = [];
-        var Match_players = [];
-        var Match_name = Matches_games.find({}, {sort: { date:-1}});//Rellenar bien
-        var Match_players = Matches_games.find({}, {sort: { date:-1}});//Rellenar bien            
-    });
-*/
+
+    Template.draw_matches.events= function(){   
+                $('#display_matches').show();		     
+
+                var game_id = $('<div>') ;
+                game_id.attr("class" , "breadcrumb estilopartida");
+                game_id.attr("id", usuario.id);
+                $('#display_valeirano').append(game_id);
+
+   
+                var match_name = $('<span>') ;
+                match_name.text(match_name);
+                game_id.append(match_name);  
+
+
+
+                var divider = $('<div>');
+                game_id.append(divider) ;  
+                var split_bar = $('<span>') ;
+                user_name.text("|");
+                game_id.append(split_bar);                                      
+                game_id.append(divider) ;  
+
+
+                var match_players = $('<span>') ;
+                match_players.text(n_players);
+                game_id.append(match_players);
+
+
+                game_id.append(divider) ;  
+                game_id.append(split_bar);                                      
+                game_id.append(divider) ;  
+
+
+                var match_owner = $('<span>') ;
+                match_owner.text(usu);
+                game_id.append(match_owner);
+
+
+                var content_button = $('<button>') ; 
+                content_button.attr("class", "glyphicon glyphicon-play play_button") ;
+                content_button.attr("id","desplegar_us") ;
+                game_id.append(play_button) ; 
+                
+    }
+
 
    Template.chat_messages.messages = function () {
 

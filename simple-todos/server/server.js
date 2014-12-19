@@ -38,6 +38,11 @@
 		remove: function(userId, doc){
 		// Only authenticated users can insert messages
 		return Meteor.userId();
+    		},
+
+                update: function(userId, doc){
+		// Only authenticated users can insert messages
+		return Meteor.userId();
     		}
 	});
     

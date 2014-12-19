@@ -89,5 +89,5 @@
 }
 
 #waiting_for_players{
- padding: 40px
+ padding: 30px
 }
