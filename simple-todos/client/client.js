@@ -196,7 +196,7 @@ Template.menu_bar.events = {
 
  
  
-   Template.draw_matches.matches = function () {
+   Template.draw_matches.matches_Wait = function () {
 	   
        var match_waiting_list = Matches_games.find({status: "Waiting"});
        //console.log(match_waiting_list);

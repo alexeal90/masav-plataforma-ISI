@@ -3,7 +3,8 @@
     **/
      Meteor.subscribe("all_games"); 
      Meteor.subscribe("users_data"); 
-     
+     Meteor.subscribe("userNames");
+
      var Busy = {OnlyBusy:false,Busy_playing:false,Busy_joined:false};
      var match_name;
 	 players = [];      
