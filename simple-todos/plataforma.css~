@@ -8,7 +8,7 @@
   float: left;
   margin-top:5px;
   margin-left:0px;
-  width:480px;
+  width: 220px;
 }
 /* Give canvas a background */
 

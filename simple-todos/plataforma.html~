@@ -73,9 +73,6 @@
 		        <button class="btn btn-primary btn-lg" id="wait_cancel">Cancelar</button> 
                 </td>
         </div>
-        <div id='display_valeirano'>
-                  ***********************************Holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa      
-        </div>
 </template>
 
 <template name="chat">
@@ -131,8 +128,9 @@
 
 
 <template name="draw_matches">
+	<td>{{matches}}</td>
     <div id='display_matches'>    
-            <ol class="breadcrumb estilopartida">
+            <!--<ol class="breadcrumb estilopartida">
                 <li id= "match_name">Prueba</li>
                 <li>|</li>
                 <li id= "match_players">4</li>
@@ -148,19 +146,32 @@
                 <li id= "match_owner">Pepito</li>
                 <button type="button" class="btn btn-default play_game">&nbsp;▶</button>       
             </ol>
+            -->
+            {{#each matches}}
+            <ol class="breadcrumb estilopartida">
+                <li id= "match_name">{{nombre_partida}}</li>
+                <li>|</li>
+                <li id= "match_players">{{num_jug}}</li>
+                <li>|</li> 
+                <li id= "match_owner">{{propietario}}</li>
+                <button id={{propietario}}&{{nombre_partida}} type="button" class="btn btn-default play_game">&nbsp;▶</button>             
+            </ol>
+           {{/each}}    
+           
+
     </div>
-    
-   <div id='display_match_started'>    
+    <div id='player_joined'>    
+           <ol class="breadcrumb estilopartida">
+	        	<li id= "Status">Te has unido a una partida</li> 
+            </ol> 
+    </div>
+    <div id='display_match_started'>    
             <ol class="breadcrumb estilopartida">
 	        	<li id= "Status">Empezada!!</li>
                 <button type="button" class="btn btn-default play_game">Terminar Partida??</button>             
             </ol>
     </div>
-
-
 </template>
-
-
 
 <!-- <template name="players"> -->
 <!--     <h2> <strong>points</strong>({{match_name}}) </h2> -->

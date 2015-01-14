@@ -1,10 +1,16 @@
 
+
+    Meteor.publish("userNames", function() {
+        return Meteor.users.find ({}, {fields: {username:1}});
+    });
+
+
     Meteor.publish("messages_current_game", function (current_game) {
-    var traza = Messages_games.find({game_id: current_game}, 
-					{limit:10, sort: {time:-1}});
+    //var traza = Messages_games.find({game_id: current_game}, 
+					//{limit:10, sort: {time:-1}});
     		return Messages_games.find({game_id: current_game}, 
 					{limit:10, sort: {time:-1}});
-			console.log(traza);
+			//console.log(traza);
 	 });
     
     
@@ -29,6 +35,13 @@
 		}
 	});
 
+	Games.allow({
+    	insert: function(userId, doc){
+		// Only authenticated users can insert messages
+		return Meteor.userId();
+		}
+	});
+
 	Matches_games.allow({
 		insert: function(userId, doc){
 		// Only authenticated users can insert messages
@@ -39,8 +52,7 @@
 		// Only authenticated users can insert messages
 		return Meteor.userId();
     		},
-
-                update: function(userId, doc){
+    	update: function(userId, doc){
 		// Only authenticated users can insert messages
 		return Meteor.userId();
     		}
@@ -48,9 +60,9 @@
     
 	 Meteor.startup(function() {
 		 if (Games.find().count() == 0) {
+		 	Games.insert({name: "Carcassonne"});
 			Games.insert({name: "FrootWars"});
 			Games.insert({name: "AlienInvasion"});
-			Games.insert({name: "Carcassonne"});
     	 	 };
 	 });
 
